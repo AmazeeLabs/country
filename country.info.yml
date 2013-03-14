@@ -1,0 +1,7 @@
+name: Country
+description: 'Provides a simple country field type.'
+core: 8.x
+package: Others
+version: VERSION
+dependencies:
+  - field

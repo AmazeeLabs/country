@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * Defines simple link field types.
+ */
+use Drupal\Core\Entity\EntityInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+/**
+ * Implements hook_help().
+ */
+function country_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#country':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function country_menu() {
+  $items['country/autocomplete'] = array(
+    'title' => 'Autocomplete country',
+    'page callback' => 'country_autocomplete',
+    //'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function country_field_info() {
+  $types['country'] = array(
+    'label' => t('Country'),
+    'description' => t('Stores a Country code ...'),
+    'instance_settings' => array(
+      'title' => DRUPAL_OPTIONAL,
+    ),
+    'default_widget' => 'country_default',
+    'default_formatter' => 'country_default',
+  );
+  return $types;
+}
+
+/**
+ * Implements hook_field_presave().
+ */
+function country_field_presave(EntityInterface $entity, $field, $instance, $langcode, &$items) {
+  $countries = country_get_list();
+  foreach ($items as $delta => &$item) {
+    $items[$delta]['iso2'] = trim($item['value']);
+    $items[$delta]['country'] = $countries[$item['value']];
+  }
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function country_field_is_empty($item, $field) {
+  return !isset($item['value']) || $item['value'] === '';
+}
+
+/**
+ * Autocomplete country name as it is typed into the textfield.
+ * 
+ * @param type $field_name
+ * @return \Symfony\Component\HttpFoundation\JsonResponse 
+ */
+function country_autocomplete() {
+  $matches = array();
+  $typed = drupal_container()->get('request')->query->get('q');
+  // TODO: cache countries
+  $countries = country_get_list();
+  foreach ($countries as $iso => $country) {
+    if (strpos(drupal_strtolower($country), drupal_strtolower($typed)) !== FALSE) {
+      $matches[$country] = $country;
+    }
+  }
+  return new JsonResponse($matches);
+}
