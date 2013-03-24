@@ -15,7 +15,7 @@ function country_help($path, $arg) {
     case 'admin/help#country':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
+      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It defines 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
       return $output;
   }
 }
@@ -27,7 +27,6 @@ function country_menu() {
   $items['country/autocomplete'] = array(
     'title' => 'Autocomplete country',
     'page callback' => 'country_autocomplete',
-    //'page arguments' => array(2),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
@@ -41,7 +40,7 @@ function country_menu() {
 function country_field_info() {
   $types['country'] = array(
     'label' => t('Country'),
-    'description' => t('Stores a Country code ...'),
+    'description' => t('Stores a country ISO-2 code and name.'),
     'instance_settings' => array(
       'title' => DRUPAL_OPTIONAL,
     ),
@@ -53,6 +52,10 @@ function country_field_info() {
 
 /**
  * Implements hook_field_presave().
+ * 
+ * Prepare the country data for saving to the database. The form element submits 
+ * the ISO-2 code. However, we also need the country name to save with the field.
+ * 
  */
 function country_field_presave(EntityInterface $entity, $field, $instance, $langcode, &$items) {
   $countries = country_get_list();
@@ -78,7 +81,6 @@ function country_field_is_empty($item, $field) {
 function country_autocomplete() {
   $matches = array();
   $typed = drupal_container()->get('request')->query->get('q');
-  // TODO: cache countries
   $countries = country_get_list();
   foreach ($countries as $iso => $country) {
     if (strpos(drupal_strtolower($country), drupal_strtolower($typed)) !== FALSE) {
