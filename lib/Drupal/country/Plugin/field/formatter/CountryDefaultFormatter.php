@@ -7,15 +7,18 @@
 
 namespace Drupal\country\Plugin\field\formatter;
 
-use Drupal\Component\Annotation\Plugin;
+use Drupal\field\Annotation\FieldFormatter;
 use Drupal\Core\Annotation\Translation;
 use Drupal\field\Plugin\Type\Formatter\FormatterBase;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Field\FieldInterface;
+use Drupal;
+
 
 /**
- * Plugin implementation of the 'text_default' formatter.
+ * Plugin implementation of the 'country' formatter.
  *
- * @Plugin(
+ * @FieldFormatter(
  *   id = "country_default",
  *   module = "country",
  *   label = @Translation("Country"),
@@ -27,14 +30,14 @@ use Drupal\Core\Entity\EntityInterface;
 class CountryDefaultFormatter extends FormatterBase {
 
   /**
-   * Implements Drupal\field\Plugin\Type\Formatter\FormatterInterface::viewElements().
+   * {@inheritdoc}
    */
-  public function viewElements(EntityInterface $entity, $langcode, array $items) {
+  public function viewElements(EntityInterface $entity, $langcode, FieldInterface $items) {
     $elements = array();
+    $allowed_values = Drupal::service('country_manager')->getList();
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array('#markup' => $item['country']);
+      $elements[$delta] = array('#markup' => $allowed_values[$item->value]);
     }
     return $elements;
   }
-
 }

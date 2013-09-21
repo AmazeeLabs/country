@@ -1,5 +1,6 @@
 name: Country
-description: 'Provides a simple country field type.'
+type: module
+description: Defines a simple country field type.
 core: 8.x
 package: Others
 version: VERSION

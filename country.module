@@ -20,72 +20,36 @@ function country_help($path, $arg) {
   }
 }
 
-/**
- * Implements hook_menu().
- */
-function country_menu() {
-  $items['country/autocomplete'] = array(
-    'title' => 'Autocomplete country',
-    'page callback' => 'country_autocomplete',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
 
-  return $items;
-}
+//function country_field_info() {
+//  $types['country'] = array(
+//    'label' => t('Country'),
+//    'description' => t('Stores a country ISO-2 code and name.'),
+//    'instance_settings' => array(
+//      'title' => DRUPAL_OPTIONAL,
+//    ),
+//    'default_widget' => 'country_default',
+//    'default_formatter' => 'country_default',
+//  );
+//  return $types;
+//}
 
-/**
- * Implements hook_field_info().
- */
-function country_field_info() {
-  $types['country'] = array(
-    'label' => t('Country'),
-    'description' => t('Stores a country ISO-2 code and name.'),
-    'instance_settings' => array(
-      'title' => DRUPAL_OPTIONAL,
-    ),
-    'default_widget' => 'country_default',
-    'default_formatter' => 'country_default',
-  );
-  return $types;
-}
-
-/**
- * Implements hook_field_presave().
- * 
- * Prepare the country data for saving to the database. The form element submits 
- * the ISO-2 code. However, we also need the country name to save with the field.
- * 
- */
-function country_field_presave(EntityInterface $entity, $field, $instance, $langcode, &$items) {
-  $countries = country_get_list();
-  foreach ($items as $delta => &$item) {
-    $items[$delta]['iso2'] = trim($item['value']);
-    $items[$delta]['country'] = $countries[$item['value']];
-  }
-}
-
-/**
- * Implements hook_field_is_empty().
- */
-function country_field_is_empty($item, $field) {
-  return !isset($item['value']) || $item['value'] === '';
-}
-
-/**
- * Autocomplete country name as it is typed into the textfield.
- * 
- * @param type $field_name
- * @return \Symfony\Component\HttpFoundation\JsonResponse 
- */
-function country_autocomplete() {
-  $matches = array();
-  $typed = drupal_container()->get('request')->query->get('q');
-  $countries = country_get_list();
-  foreach ($countries as $iso => $country) {
-    if (strpos(drupal_strtolower($country), drupal_strtolower($typed)) !== FALSE) {
-      $matches[$country] = $country;
-    }
-  }
-  return new JsonResponse($matches);
-}
+//
+///**
+// * Implements hook_field_info_alter().
+// */
+//function telephone_field_info_alter(&$info) {
+//  if (Drupal::moduleHandler()->moduleExists('text')) {
+//    $info['telephone']['default_formatter'] = 'text_plain';
+//  }
+//}
+//
+//
+///**
+// * Implements hook_field_formatter_info_alter().
+// */
+//function telephone_field_formatter_info_alter(&$info) {
+//  if (isset($info['text_plain'])) {
+//    $info['text_plain']['field_types'][] = 'telephone';
+//  }
+//}
