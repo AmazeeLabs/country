@@ -2,10 +2,8 @@
 
 /**
  * @file
- * Defines simple link field types.
+ * Defines simple country field type.
  */
-use Drupal\Core\Entity\EntityInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Implements hook_help().
@@ -14,42 +12,8 @@ function country_help($path, $arg) {
   switch ($path) {
     case 'admin/help#country':
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It defines 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
+      $output .= '<h3>' . t('Country') . '</h3>';
+      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It provides 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
       return $output;
   }
 }
-
-
-//function country_field_info() {
-//  $types['country'] = array(
-//    'label' => t('Country'),
-//    'description' => t('Stores a country ISO-2 code and name.'),
-//    'instance_settings' => array(
-//      'title' => DRUPAL_OPTIONAL,
-//    ),
-//    'default_widget' => 'country_default',
-//    'default_formatter' => 'country_default',
-//  );
-//  return $types;
-//}
-
-//
-///**
-// * Implements hook_field_info_alter().
-// */
-//function telephone_field_info_alter(&$info) {
-//  if (Drupal::moduleHandler()->moduleExists('text')) {
-//    $info['telephone']['default_formatter'] = 'text_plain';
-//  }
-//}
-//
-//
-///**
-// * Implements hook_field_formatter_info_alter().
-// */
-//function telephone_field_formatter_info_alter(&$info) {
-//  if (isset($info['text_plain'])) {
-//    $info['text_plain']['field_types'][] = 'telephone';
-//  }
-//}

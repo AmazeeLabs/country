@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\country\Plugin\field\formatter\TextDefaultFormatter.
+ * Definition of Drupal\country\Plugin\field\formatter\CountryDefaultFormatter.
  */
 
 namespace Drupal\country\Plugin\field\formatter;

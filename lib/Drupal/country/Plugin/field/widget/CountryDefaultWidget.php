@@ -23,8 +23,7 @@ use Drupal;
  *   label = @Translation("Country select"),
  *   field_types = {
  *     "country"
- *   },
- *   multiple_values = TRUE
+ *   }
  * )
  */
 class CountryDefaultWidget extends WidgetBase {
@@ -37,7 +36,7 @@ class CountryDefaultWidget extends WidgetBase {
         '#type' => 'select',
         '#options' => Drupal::service('country_manager')->getList(),
         '#empty_value' => '',
-        '#default_value' => isset($items[$delta]->iso2) ? $items[$delta]->iso2 : NULL,
+        '#default_value' => isset($items[$delta]->value) ? $items[$delta]->value : NULL,
         '#description' => t('Select a country'),
       );
     return $element;
