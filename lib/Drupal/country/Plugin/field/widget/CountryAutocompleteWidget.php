@@ -56,7 +56,6 @@ class CountryAutocompleteWidget extends WidgetBase {
    * Implements Drupal\field\Plugin\Type\Widget\WidgetInterface::massageFormValues()
    */
   public function massageFormValues(array $values, array $form, array &$form_state) {
-    dpm($values);
     // Autocomplete widgets only send the country name in the form, so we must detect them
     // here and process them independently so that we have values for the ISO2
     $items = array();
