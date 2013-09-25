@@ -1,0 +1,6 @@
+country_autocomplete:
+  pattern: '/country/autocomplete'
+  defaults:
+    _controller: '\Drupal\country\Controller\CountryAutocompleteController::autocompleteCountry'
+  requirements:
+    _permission: 'administer content types'
