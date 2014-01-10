@@ -5,13 +5,11 @@
  * Definition of Drupal\country\Plugin\field\formatter\CountryDefaultFormatter.
  */
 
-namespace Drupal\country\Plugin\field\formatter;
+namespace Drupal\country\Plugin\Field\FieldFormatter;
 
-use Drupal\field\Annotation\FieldFormatter;
-use Drupal\Core\Annotation\Translation;
-use Drupal\field\Plugin\Type\Formatter\FormatterBase;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Field\FieldInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FieldItemInterface;
+use Drupal\Core\Field\FormatterBase;
 use Drupal;
 
 
@@ -32,7 +30,7 @@ class CountryDefaultFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(EntityInterface $entity, $langcode, FieldInterface $items) {
+  public function viewElements(FieldItemListInterface $items) {
     $elements = array();
     $allowed_values = Drupal::service('country_manager')->getList();
     foreach ($items as $delta => $item) {

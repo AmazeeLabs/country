@@ -1,5 +1,5 @@
 country_autocomplete:
-  pattern: '/country/autocomplete'
+  path: '/country/autocomplete'
   defaults:
     _controller: '\Drupal\country\Controller\CountryAutocompleteController::autocompleteCountry'
   requirements:

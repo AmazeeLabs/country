@@ -5,13 +5,14 @@
  * Definition of Drupal\country\Plugin\field\widget\CountryAutocompleteWidget.
  */
 
-namespace Drupal\country\Plugin\field\widget;
+namespace Drupal\country\Plugin\Field\FieldWidget;
 
 
-use Drupal\field\Annotation\FieldWidget;
 use Drupal\Core\Annotation\Translation;
-use Drupal\Core\Entity\Field\FieldInterface;
-use Drupal\field\Plugin\Type\Widget\WidgetBase;
+use Drupal\Core\Field\FieldInterface;
+
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\WidgetBase;
 use Drupal;
 
 
@@ -37,7 +38,7 @@ class CountryAutocompleteWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public function formElement(FieldInterface $items, $delta, array $element, $langcode, array &$form, array &$form_state) {
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, array &$form_state) {
     $countries = Drupal::service('country_manager')->getList();
     $element['value'] = $element + array(
         '#type' => 'textfield',

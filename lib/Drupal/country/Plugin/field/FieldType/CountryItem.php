@@ -5,11 +5,10 @@
  * Contains \Drupal\country\Plugin\field\field_type\CountryItem.
  */
 
-namespace Drupal\country\Plugin\field\field_type;
+namespace Drupal\country\Plugin\Field\FieldType;
 
-use Drupal\Core\Entity\Annotation\FieldType;
-use Drupal\Core\Annotation\Translation;
-use Drupal\field\Plugin\Type\FieldType\ConfigFieldItemBase;
+use Drupal\Core\Field\ConfigFieldItemBase;
+use Drupal\Core\TypedData\DataDefinition;
 use Drupal\field\FieldInterface;
 
 /**
@@ -25,6 +24,8 @@ use Drupal\field\FieldInterface;
  */
 class CountryItem extends ConfigFieldItemBase {
 
+  const COUNTRY_ISO2_MAXLENGTH = 2;
+
   /**
    * Definitions of the contained properties.
    *
@@ -37,10 +38,8 @@ class CountryItem extends ConfigFieldItemBase {
    */
   public function getPropertyDefinitions() {
     if (!isset(static::$propertyDefinitions)) {
-      static::$propertyDefinitions['value'] = array(
-        'type' => 'string',
-        'label' => t('Country'),
-      );
+      static::$propertyDefinitions['value'] = DataDefinition::create('string')
+        ->setLabel(t('Country'));
     }
     return static::$propertyDefinitions;
   }
@@ -57,6 +56,9 @@ class CountryItem extends ConfigFieldItemBase {
           'not null' => FALSE,
         ),
       ),
+      'indexes' => array(
+        'value' => array('value'),
+      ),
     );
   }
 
@@ -72,15 +74,19 @@ class CountryItem extends ConfigFieldItemBase {
    * {@inheritdoc}
    */
   public function getConstraints() {
-    $constraint_manager = \Drupal::typedData()->getValidationConstraintManager();
+    $constraint_manager = \Drupal::typedData()
+      ->getValidationConstraintManager();
     $constraints = parent::getConstraints();
 
-    $max_length = 2;
     $constraints[] = $constraint_manager->create('ComplexData', array(
       'value' => array(
         'Length' => array(
-          'max' => $max_length,
-          'maxMessage' => t('%name: the country iso-2 code may not be longer than @max characters.', array('%name' => $this->getFieldDefinition()->getFieldLabel(), '@max' => $max_length)),
+          'max' => static::COUNTRY_ISO2_MAXLENGTH,
+          'maxMessage' => t('%name: the country iso-2 code may not be longer than @max characters.', array(
+            '%name' => $this->getFieldDefinition()
+                ->getLabel(),
+            '@max' => static::COUNTRY_ISO2_MAXLENGTH
+          )),
         )
       ),
     ));
