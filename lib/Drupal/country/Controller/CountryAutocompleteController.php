@@ -7,6 +7,7 @@
 
 namespace Drupal\country\Controller;
 
+use Drupal\Component\Utility\String;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -58,7 +59,6 @@ class CountryAutocompleteController implements ContainerInjectionInterface {
    */
   public function autocompleteCountry(Request $request) {
     $matches = $this->countryAutocomplete->getMatches($request->query->get('q'));
-
     return new JsonResponse($matches);
   }
 

@@ -1,4 +1,4 @@
-country_autocomplete:
+country.autocomplete:
   path: '/country/autocomplete'
   defaults:
     _controller: '\Drupal\country\Controller\CountryAutocompleteController::autocompleteCountry'

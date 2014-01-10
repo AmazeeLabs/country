@@ -15,12 +15,7 @@ use Drupal;
 class CountryAutocomplete {
 
   /**
-   * Constructs a UserAutocomplete object.
-   *
-   * @param \Drupal\Core\Database\Connection $connection
-   *   The database connection to query for the user names.
-   * @param \Drupal\Core\Config\ConfigFactory $config_factory
-   *   The config factory.
+   * Constructs a CountryAutocomplete object.
    */
   public function __construct() {}
 
@@ -39,7 +34,7 @@ class CountryAutocomplete {
       $countries = Drupal::service('country_manager')->getList();
       foreach ($countries as $iso2 => $country) {
         if (strpos(drupal_strtolower($country), drupal_strtolower($string)) !== FALSE) {
-          $matches[$country] = $country;
+          $matches[] = array('value' => $country, 'label' => $country);
         }
       }
     }
