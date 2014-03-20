@@ -7,9 +7,6 @@
 
 namespace Drupal\country\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Annotation\Translation;
-use Drupal\Core\Field\FieldInterface;
-
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal;
