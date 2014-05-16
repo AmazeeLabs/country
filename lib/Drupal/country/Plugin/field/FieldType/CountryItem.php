@@ -7,9 +7,9 @@
 
 namespace Drupal\country\Plugin\Field\FieldType;
 
-use Drupal\Core\Field\ConfigFieldItemBase;
+use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\TypedData\DataDefinition;
-use Drupal\field\FieldInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
  * Plugin implementation of the 'country' field type.
@@ -22,32 +22,25 @@ use Drupal\field\FieldInterface;
  *   default_formatter = "country_default"
  * )
  */
-class CountryItem extends ConfigFieldItemBase {
+
+class CountryItem extends FieldItemBase {
 
   const COUNTRY_ISO2_MAXLENGTH = 2;
 
   /**
-   * Definitions of the contained properties.
-   *
-   * @var array
-   */
-  static $propertyDefinitions;
-
-  /**
    * {@inheritdoc}
    */
-  public function getPropertyDefinitions() {
-    if (!isset(static::$propertyDefinitions)) {
-      static::$propertyDefinitions['value'] = DataDefinition::create('string')
-        ->setLabel(t('Country'));
-    }
-    return static::$propertyDefinitions;
+  public static function propertyDefinitions(FieldDefinitionInterface $field_definition) {
+    $properties['value'] = DataDefinition::create('string')
+      ->setLabel(t('Country'));
+
+    return $properties;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function schema(FieldInterface $field) {
+  public static function schema(FieldDefinitionInterface $field_definition) {
     return array(
       'columns' => array(
         'value' => array(
