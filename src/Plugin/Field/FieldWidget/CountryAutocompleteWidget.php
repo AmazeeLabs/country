@@ -18,15 +18,9 @@ use Drupal;
  *
  * @FieldWidget(
  *   id = "country_autocomplete",
- *   module = "country",
  *   label = @Translation("Country autocomplete widget"),
  *   field_types = {
  *     "country"
- *   },
- *   settings = {
- *     "size" = "60",
- *     "autocomplete_route_name" = "country.autocomplete",
- *     "placeholder" = ""
  *   }
  * )
  */
@@ -35,8 +29,19 @@ class CountryAutocompleteWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return array(
+      'size' => '60',
+      'autocomplete_route_name' => 'country.autocomplete',
+      'placeholder' => '',
+    ) + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, array &$form_state) {
-    $countries = Drupal::service('country_manager')->getList();
+    $countries = \Drupal::service('country_manager')->getList();
     $element += array(
         '#type' => 'textfield',
         '#default_value' => (isset($items[$delta]->value)) ? $countries[$items[$delta]->value] : '',
@@ -57,13 +62,13 @@ class CountryAutocompleteWidget extends WidgetBase {
     // Autocomplete widgets only send the country name in the form, so we must
     // detect and process them independently so that we have values for the ISO2.
     $items = array();
-    $countries = Drupal::service('country_manager')->getList();
+    $countries = \Drupal::service('country_manager')->getList();
     foreach ($values as $value) {
       if (drupal_strlen($value)) {
         foreach ($countries as $iso2 => $country) {
           if ($country == $value) {
             $items[] = array('value' => $iso2);
-            break;
+            break 2;
           }
         }
       }

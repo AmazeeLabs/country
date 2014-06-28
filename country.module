@@ -5,15 +5,17 @@
  * Defines simple country field type.
  */
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Implements hook_help().
  */
-function country_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#country':
+function country_help($route_name, Request $request) {
+  switch ($route_name) {
+    case 'help.page.country':
       $output = '';
       $output .= '<h3>' . t('Country') . '</h3>';
-      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It provides 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="@field-help">Field module help page</a> for more information about fields.', array('@field-help' => url('admin/help/field'))) . '</p>';
+      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It provides 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="!field-help">Field module help page</a> for more information about fields.', array('!field-help' => url('admin/help/field_ui'))) . '</p>';
       return $output;
   }
 }
