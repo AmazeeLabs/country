@@ -19,3 +19,20 @@ function country_help($route_name, Request $request) {
       return $output;
   }
 }
+
+/**
+ * Form element validate handler for country autocomplete element.
+ */
+function country_autocomplete_validate($element, &$form_state) {
+  if ($country = $element['#value']) {
+    $countries = \Drupal::service('country_manager')->getList();
+    $iso2 = array_search($country, $countries);
+    if (!empty($iso2)) {
+      \Drupal::formBuilder()
+        ->setValue($element, array(
+            'value' => $iso2,
+            'label' => $country
+          ), $form_state);
+    }
+  }
+}
