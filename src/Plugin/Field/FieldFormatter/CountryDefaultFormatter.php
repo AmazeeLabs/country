@@ -8,7 +8,6 @@
 namespace Drupal\country\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal;
 
@@ -32,9 +31,9 @@ class CountryDefaultFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items) {
     $elements = array();
-    $allowed_values = Drupal::service('country_manager')->getList();
+    $countries = \Drupal::service('country_manager')->getList();
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array('#markup' => $allowed_values[$item->value]);
+      $elements[$delta] = array('#markup' => $countries[$item->value]);
     }
     return $elements;
   }
