@@ -33,7 +33,9 @@ class CountryDefaultFormatter extends FormatterBase {
     $elements = array();
     $countries = \Drupal::service('country_manager')->getList();
     foreach ($items as $delta => $item) {
-      $elements[$delta] = array('#markup' => $countries[$item->value]);
+      if (isset($countries[$item->value])) {
+        $elements[$delta] = array('#markup' => $countries[$item->value]);
+      }
     }
     return $elements;
   }

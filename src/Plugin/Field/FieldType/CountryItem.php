@@ -45,7 +45,7 @@ class CountryItem extends FieldItemBase {
       'columns' => array(
         'value' => array(
           'type' => 'char',
-          'length' => 2,
+          'length' => static::COUNTRY_ISO2_MAXLENGTH,
           'not null' => FALSE,
         ),
       ),

@@ -11,7 +11,7 @@ namespace Drupal\country\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal;
-
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'country_autocomplete' widget.
@@ -40,11 +40,11 @@ class CountryAutocompleteWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, array &$form_state) {
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $countries = \Drupal::service('country_manager')->getList();
-    $element += array(
+    $element = $element + array(
       '#type' => 'textfield',
-      '#default_value' => (isset($items[$delta]->value)) ? $countries[$items[$delta]->value] : '',
+      '#default_value' =>  (isset($items[$delta]->value) && isset($countries[$items[$delta]->value])) ? $countries[$items[$delta]->value] : '',
       '#autocomplete_route_name' => $this->getSetting('autocomplete_route_name'),
       '#autocomplete_route_parameters' => array(),
       '#size' => $this->getSetting('size'),
