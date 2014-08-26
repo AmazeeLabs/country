@@ -29,10 +29,7 @@ function country_autocomplete_validate($element, FormStateInterface $form_state)
     $countries = \Drupal::service('country_manager')->getList();
     $iso2 = array_search($country, $countries);
     if (!empty($iso2)) {
-      $form_state->setValueForElement($element, array(
-        'value' => $iso2,
-        'label' => $country
-      ));
+      $form_state->setValueForElement($element, $iso2);
     }
   }
 }

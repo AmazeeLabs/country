@@ -42,7 +42,7 @@ class CountryAutocompleteWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $countries = \Drupal::service('country_manager')->getList();
-    $element = $element + array(
+    $element['value'] = $element + array(
       '#type' => 'textfield',
       '#default_value' =>  (isset($items[$delta]->value) && isset($countries[$items[$delta]->value])) ? $countries[$items[$delta]->value] : '',
       '#autocomplete_route_name' => $this->getSetting('autocomplete_route_name'),
