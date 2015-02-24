@@ -18,7 +18,7 @@ use Drupal;
  *
  * @FieldWidget(
  *   id = "country_autocomplete",
- *   label = @Translation("Country autocomplete widget"),
+ *   label = @Translation("Country autocomplete"),
  *   field_types = {
  *     "country"
  *   }

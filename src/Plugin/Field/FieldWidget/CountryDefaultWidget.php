@@ -17,7 +17,7 @@ use Drupal;
  *
  * @FieldWidget(
  *   id = "country_default",
- *   label = @Translation("Country select"),
+ *   label = @Translation("Country select options"),
  *   field_types = {
  *     "country"
  *   }
