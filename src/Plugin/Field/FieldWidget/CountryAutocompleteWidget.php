@@ -33,7 +33,7 @@ class CountryAutocompleteWidget extends WidgetBase {
     return array(
       'size' => '60',
       'autocomplete_route_name' => 'country.autocomplete',
-      'placeholder' => '',
+      'placeholder' => t('Start typing a country name ...'),
     ) + parent::defaultSettings();
   }
 
