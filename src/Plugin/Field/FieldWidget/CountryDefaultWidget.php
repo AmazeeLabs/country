@@ -28,15 +28,6 @@ class CountryDefaultWidget extends WidgetBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return array(
-      'placeholder' => '',
-    ) + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $countries = \Drupal::service('country_manager')->getList();
     $element['value'] = $element + array(
