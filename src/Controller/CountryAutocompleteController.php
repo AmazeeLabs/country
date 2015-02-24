@@ -29,7 +29,7 @@ class CountryAutocompleteController {
    */
   public function autocomplete(Request $request) {
     $matches = array();
-    $string = $this->countryAutocomplete->getMatches($request->query->get('q'));
+    $string = $request->query->get('q');
     if ($string) {
       $countries = \Drupal::service('country_manager')->getList();
       foreach ($countries as $iso2 => $country) {
