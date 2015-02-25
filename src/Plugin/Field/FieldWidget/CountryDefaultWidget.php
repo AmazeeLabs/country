@@ -9,30 +9,21 @@ namespace Drupal\country\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
-use Drupal;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal;
 
 /**
  * Plugin implementation of the 'country_default' widget.
  *
  * @FieldWidget(
  *   id = "country_default",
- *   label = @Translation("Country select"),
+ *   label = @Translation("Country select options"),
  *   field_types = {
  *     "country"
  *   }
  * )
  */
 class CountryDefaultWidget extends WidgetBase {
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function defaultSettings() {
-    return array(
-      'placeholder' => '',
-    ) + parent::defaultSettings();
-  }
 
   /**
    * {@inheritdoc}

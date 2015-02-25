@@ -1,4 +1,0 @@
-services:
-  country.autocomplete:
-    class: Drupal\country\CountryAutocomplete
-    arguments: []

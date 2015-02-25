@@ -10,15 +10,15 @@ namespace Drupal\country\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
-use Drupal;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal;
 
 /**
  * Plugin implementation of the 'country_autocomplete' widget.
  *
  * @FieldWidget(
  *   id = "country_autocomplete",
- *   label = @Translation("Country autocomplete widget"),
+ *   label = @Translation("Country autocomplete"),
  *   field_types = {
  *     "country"
  *   }
@@ -33,7 +33,7 @@ class CountryAutocompleteWidget extends WidgetBase {
     return array(
       'size' => '60',
       'autocomplete_route_name' => 'country.autocomplete',
-      'placeholder' => '',
+      'placeholder' => t('Start typing a country name ...'),
     ) + parent::defaultSettings();
   }
 
