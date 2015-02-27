@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\country\Plugin\field\widget\CountryDefaultWidget.
+ * Definition of Drupal\country\Plugin\Field\FieldWidget\CountryDefaultWidget.
  */
 
 namespace Drupal\country\Plugin\Field\FieldWidget;

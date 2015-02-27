@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Definition of Drupal\country\Plugin\field\widget\CountryAutocompleteWidget.
+ * Definition of Drupal\country\Plugin\Field\FieldWidget\CountryAutocompleteWidget.
  */
 
 namespace Drupal\country\Plugin\Field\FieldWidget;

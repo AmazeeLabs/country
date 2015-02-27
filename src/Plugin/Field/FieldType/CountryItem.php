@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\country\Plugin\field\field_type\CountryItem.
+ * Contains \Drupal\country\Plugin\Field\FieldType\CountryItem.
  */
 
 namespace Drupal\country\Plugin\Field\FieldType;
