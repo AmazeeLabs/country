@@ -55,4 +55,34 @@ class CountryAutocompleteWidget extends WidgetBase {
 
     return $element;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $element = parent::settingsForm($form, $form_state);
+    $element['size'] = array(
+      '#type' => 'number',
+      '#title' => t('Size'),
+      '#default_value' => $this->getSetting('size'),
+      '#required' => TRUE,
+      '#min' => 20,
+    );
+    $element['placeholder'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Placeholder'),
+      '#default_value' => $this->getSetting('placeholder'),
+    );
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = array();
+    $summary[] = t('Size: @size', array('@size' => $this->getSetting('size')));
+    $summary[] = t('Placeholder: @placeholder', array('@placeholder' => $this->getSetting('placeholder')));
+    return $summary;
+  }
 }
