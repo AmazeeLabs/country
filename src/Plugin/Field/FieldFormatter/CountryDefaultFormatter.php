@@ -29,7 +29,7 @@ class CountryDefaultFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items) {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = array();
     $countries = \Drupal::service('country_manager')->getList();
     foreach ($items as $delta => $item) {
