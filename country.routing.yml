@@ -1,5 +1,5 @@
 country.autocomplete:
-  path: '/country/autocomplete'
+  path: '/country/autocomplete/{entity_type}/{bundle}/{field_name}'
   defaults:
     _controller: '\Drupal\country\Controller\CountryAutocompleteController::autocomplete'
   requirements:
