@@ -29,7 +29,7 @@ class CountryDefaultWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $countries = \Drupal::service('country_manager')->getList();
+    $countries = \Drupal::service('country.field.manager')->getSelectableCountries($this->fieldDefinition);
     $element['value'] = $element + array(
         '#type' => 'select',
         '#options' => $countries,
