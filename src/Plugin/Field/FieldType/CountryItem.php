@@ -26,7 +26,7 @@ use Drupal\Core\Form\FormStateInterface;
 
 class CountryItem extends FieldItemBase {
 
-  const COUNTRY_ISO2_MAXLENGTH = 2;
+  const COUNTRY_ISO_MAXLENGTH = 2;
 
   /**
    * {@inheritdoc}
@@ -46,7 +46,7 @@ class CountryItem extends FieldItemBase {
       'columns' => array(
         'value' => array(
           'type' => 'char',
-          'length' => static::COUNTRY_ISO2_MAXLENGTH,
+          'length' => static::COUNTRY_ISO_MAXLENGTH,
           'not null' => FALSE,
         ),
       ),
@@ -74,8 +74,8 @@ class CountryItem extends FieldItemBase {
     $constraints[] = $constraint_manager->create('ComplexData', array(
       'value' => array(
         'Length' => array(
-          'max' => static::COUNTRY_ISO2_MAXLENGTH,
-          'maxMessage' => t('%name: the country iso-2 code may not be longer than @max characters.', array('%name' => $this->getFieldDefinition()->getLabel(), '@max' => static::COUNTRY_ISO2_MAXLENGTH)),
+          'max' => static::COUNTRY_ISO_MAXLENGTH,
+          'maxMessage' => t('%name: the country iso-2 code may not be longer than @max characters.', array('%name' => $this->getFieldDefinition()->getLabel(), '@max' => static::COUNTRY_ISO_MAXLENGTH)),
         )
       ),
     ));
