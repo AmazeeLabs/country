@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -16,20 +16,7 @@ function country_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.country':
       $output = '';
       $output .= '<h3>' . t('Country') . '</h3>';
-      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It provides 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="!field-help">Field module help page</a> for more information about fields.', array('!field-help' => \Drupal::url('help.page', array('name' => 'field_ui')))) . '</p>';
+      $output .= '<p>' . t('The Country module defines a simple country field type for the Field module. It provides 2 widgets - select options and autocomplete textfield - for this purpose.  See the <a href="!field-help">Field module help page</a> for more information about fields.', array('!field-help' => Url::fromRoute('help.page', array('name' => 'field_ui')))) . '</p>';
       return $output;
-  }
-}
-
-/**
- * Form element validate handler for country autocomplete element.
- */
-function country_autocomplete_validate($element, FormStateInterface $form_state) {
-  if ($country = $element['#value']) {
-    $countries = \Drupal::service('country_manager')->getList();
-    $iso2 = array_search($country, $countries);
-    if (!empty($iso2)) {
-      $form_state->setValueForElement($element, $iso2);
-    }
   }
 }
