@@ -142,7 +142,7 @@ class CountryItem extends FieldItemBase {
       '#type' => 'select',
       '#title' => t('Selectable countries'),
       '#default_value' => $settings['selectable_countries'],
-      '#options' => \Drupal::service('country.field.manager')->getSelectableCountries($this->getFieldDefinition()),
+      '#options' => \Drupal::service('country_manager')->getList(),
       '#description' => t('Select all countries you want to make available for this field.'),
       '#multiple' => TRUE,
       '#size' => 10,
