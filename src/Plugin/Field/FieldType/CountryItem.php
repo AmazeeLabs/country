@@ -10,6 +10,7 @@ namespace Drupal\country\Plugin\Field\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'country' field type.
@@ -82,4 +83,69 @@ class CountryItem extends FieldItemBase {
     return $constraints;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultStorageSettings() {
+    return array(
+      'selectable_countries' => array(),
+    ) + parent::defaultStorageSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultFieldSettings() {
+    return array(
+        'selectable_countries' => array(),
+      ) + parent::defaultFieldSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
+    $element = array();
+    $settings = $this->getSettings();
+    // Add selectable_countries element.
+    static::defaultCountriesForm($element, $settings);
+    $element['selectable_countries']['#description'] = t("If no countries are selected, all of them will be available for this field and will override the field's default selectable countries.");
+
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
+    $element = array();
+    // We need the field-level 'selectable_countries' setting, and $this->getSettings()
+    // will only provide the instance-level one, so we need to explicitly fetch
+    // the field.
+    $settings = $this->getFieldDefinition()->getFieldStorageDefinition()->getSettings();
+    static::defaultCountriesForm($element, $settings);
+    $element['selectable_countries']['#description'] = t('If no countries are selected, all of them will be available for this field.');
+
+    return $element;
+  }
+
+  /**
+   * Builds the selectable_countries element.
+   *
+   * @param array $element
+   *   The form associative array passed by reference.
+   * @param array $settings
+   *   The field settings array.
+   */
+  protected function defaultCountriesForm(array &$element, array $settings) {
+    $element['selectable_countries'] = array(
+      '#type' => 'select',
+      '#title' => t('Selectable countries'),
+      '#default_value' => $settings['selectable_countries'],
+      '#options' => \Drupal::service('country.field.manager')->getSelectableCountries($this->getFieldDefinition()),
+      '#description' => t('Select all countries you want to make available for this field.'),
+      '#multiple' => TRUE,
+      '#size' => 10,
+    );
+  }
 }
