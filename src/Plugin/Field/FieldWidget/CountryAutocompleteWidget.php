@@ -41,16 +41,21 @@ class CountryAutocompleteWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    $countries = \Drupal::service('country_manager')->getList();
+    $countries = \Drupal::service('country.field.manager')->getSelectableCountries($this->fieldDefinition);
     $element['value'] = $element + array(
       '#type' => 'textfield',
       '#default_value' =>  (isset($items[$delta]->value) && isset($countries[$items[$delta]->value])) ? $countries[$items[$delta]->value] : '',
       '#autocomplete_route_name' => $this->getSetting('autocomplete_route_name'),
-      '#autocomplete_route_parameters' => array(),
+      '#autocomplete_route_parameters' => array(
+        'entity_type' => $this->fieldDefinition->get('entity_type'),
+        'bundle' => $this->fieldDefinition->get('bundle'),
+        'field_name' => $this->fieldDefinition->get('field_name'),
+      ),
       '#size' => $this->getSetting('size'),
       '#placeholder' => $this->getSetting('placeholder'),
       '#maxlength' => 255,
-      '#element_validate' => array('country_autocomplete_validate'),
+      '#selectable_countries' => $countries,
+      '#element_validate' => array(array($this, 'validateElement')),
     );
 
     return $element;
@@ -84,5 +89,21 @@ class CountryAutocompleteWidget extends WidgetBase {
     $summary[] = t('Size: @size', array('@size' => $this->getSetting('size')));
     $summary[] = t('Placeholder: @placeholder', array('@placeholder' => $this->getSetting('placeholder')));
     return $summary;
+  }
+
+  /**
+   * Form element validate handler for country autocomplete.
+   */
+  public static function validateElement($element, FormStateInterface $form_state) {
+    if ($country = $element['#value']) {
+      $countries = $element['#selectable_countries'];
+      $iso2 = array_search($country, $countries);
+      if (!empty($iso2)) {
+        $form_state->setValueForElement($element, $iso2);
+      }
+      else {
+        $form_state->setError($element, t('An unexpected country has been entered.'));
+      }
+    }
   }
 }
