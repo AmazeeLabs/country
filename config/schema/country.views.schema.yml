@@ -1,0 +1,8 @@
+views.filter.country_item:
+  type: views_filter
+
+views.filter_value.country_item:
+  type: mapping
+  mapping:
+    type:
+      type: string
